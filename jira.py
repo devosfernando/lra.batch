@@ -46,7 +46,7 @@ def ejecucion():
         print("Conexión a el driver de chrome") 
         try:
             #driver = webdriver.Chrome("C:\chromedriver.exe", options=options) 
-            host='http://'+os.getenv("host_selenium")+':4444/wd/hub'
+            host='http://'+os.getenv("HOST_SELENIUM")+':4444/wd/hub'
             driver = webdriver.Remote(host,options=options) 
             print("Abrir conexión")    
         except WebDriverException as e:
@@ -178,12 +178,12 @@ def ejecucion():
 
 def conexion():
     print ("---Conection Database---")
-    db = mysql.connector.connect(host=os.getenv("host_mysql"),
-                                    port=os.getenv("port_mysql"),
-                                    user=os.getenv("user_mysql"), 
-                                    password=os.getenv("pass_mysql"), 
-                                    database=os.getenv("bd_mysql"),
-                                    auth_plugin=os.getenv("ath_mysql"))
+    db = mysql.connector.connect(host=os.getenv("HOST"),
+                                    port=os.getenv("PORT_MYSQL"),
+                                    user=os.getenv("USER_MYSQL"), 
+                                    password=os.getenv("PASSWORD_MYSQL"), 
+                                    database=os.getenv("BD_MYSQL"),
+                                    auth_plugin=os.getenv("ATH_MYSQL"))
     return db  
 
 def loadCookieToSqlite(nameCookie, value, date):
@@ -241,10 +241,10 @@ def loadStatusExecution(date_ini, date_fin, status):
             print("The SQL connection is closed")
 
 def leerArchivoDll():
-    user = os.getenv("usuario")
-    psswrd = os.getenv("usuario_ps")
-    correo = os.getenv("correo")
-    copssd = os.getenv("imap")
+    user = os.getenv("USUARIO")
+    psswrd = os.getenv("USUARIO_PS")
+    correo = os.getenv("CORREO")
+    copssd = os.getenv("IMAP")
     return user, psswrd, correo, copssd
 
 
@@ -268,4 +268,4 @@ if __name__=="__main__":
             'status': resultado
         }
         return reponse
-    app.run(host='0.0.0.0',port=os.getenv("port_serv"))    
+    app.run(host='0.0.0.0',port=os.getenv("PORT_SERV"))    
