@@ -23,6 +23,9 @@ import warnings
 # Importamos el sincronizzador de la tabla history
 import sincronizar as sincronizar
 
+#importamo el conector de jira
+import jira as jira
+
 # Obtener env de entorno
 from dotenv import load_dotenv
 
@@ -74,6 +77,15 @@ def enpoint():
         'message': 'Ejcución completa'
     }
     return 'reponse'
+
+@app.route('/jira',methods=['GET'])
+def enpointjira():
+    resultado=jira.main()
+    reponse = {
+        'message': 'Ejecución completa',
+        'status': resultado
+    }
+    return reponse
 
 def sendData(path_file):
     dataJson = readJson(path_file)
