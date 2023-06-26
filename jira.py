@@ -165,7 +165,7 @@ def ejecucion():
         print("Finaliza")
         
     except Exception as e:
-        status='ERROR GENERAL'
+        status='ERROR GENERAL'+ str(e)
         print("Se produjo un error:", e)
         print("Error generico")
         return e
