@@ -23,8 +23,11 @@ import warnings
 # Importamos el sincronizzador de la tabla history
 import sincronizar as sincronizar
 
-#importamo el conector de jira
+#importamos el conector de jira
 import jira as jira
+
+#importamos el conector de atenea
+import mainAtenea as atenea
 
 # Obtener env de entorno
 from dotenv import load_dotenv
@@ -73,19 +76,28 @@ class Executions:
 @app.route('/',methods=['GET'])
 def enpoint():
     main()
-    reponse = {
-        'message': 'Ejcución completa'
+    response = {
+        'message': 'Ejecución completa'
     }
-    return 'reponse'
+    return response
 
 @app.route('/jira',methods=['GET'])
 def enpointjira():
     resultado=jira.main()
-    reponse = {
+    response = {
         'message': 'Ejecución completa',
         'status': resultado
     }
-    return reponse
+    return response
+
+@app.route('/atenea',methods=['GET'])
+def enpointatenea():
+    resultado= atenea.main()
+    response = {
+        'message': 'Ejecución completa',
+        'status': resultado
+    }
+    return response
 
 def sendData(path_file):
     dataJson = readJson(path_file)
