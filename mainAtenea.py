@@ -301,5 +301,3 @@ def main():
     print("")    
     ejecucion()
     print("- Process end succesfully")
-
-main()
