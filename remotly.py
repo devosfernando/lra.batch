@@ -73,7 +73,7 @@ class Executions:
         self.run = run
         return
     
-@app.route('/',methods=['GET'])
+@app.route('/remotly',methods=['GET'])
 def enpoint():
     main()
     response = {
