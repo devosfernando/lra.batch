@@ -7,6 +7,7 @@ import requests
 import datetime
 import json
 import filter_json
+import fluent_driver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
@@ -16,6 +17,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
 
 # Obtener env de entorno
 from dotenv import load_dotenv
@@ -25,6 +27,8 @@ selenium_timeout = 5
 pageSize = 100
 timeWait= 2
 folder_data="info/"
+xpath_google = '//*[@id="view_container"]/div/div/div[2]/div/div[2]/div/div[1]/div/div/button/span'
+xpath_ether = '//*[@id="ext-element-48"]'
 class AccessException(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -40,14 +44,44 @@ def validar_caso(driver):
     if error_code == -1:
       message="Google page error"
   elif "platform.bbva.com" in url:
-    print('- OTP check')
-    [driver, error_code] = segundo_factor(driver)
+    print('- Second authentication factor')
+    [driver, error_code] = verificar_segundo_factor(driver)
     if error_code == -1:
       message="Second factor error"
   elif "bbva-ether-console" in url:
     print('- Ether direct access')
     time.sleep(timeout)
   return [driver,error_code,message]  
+
+# Verificación de tipo de autenticación QR o OTP
+def verificar_segundo_factor(driver):
+   timeout = selenium_timeout
+   error_code = 0
+   #if ("Está intentando acceder a los sistemas de BBVA" in driver.page_source or
+   #    "You are trying to access BBVA systems" in driver.page_source):
+   if ("MySecurity" in driver.page_source or
+       "Captura este codigo QR" in driver.page_source):
+      try:
+         element_bbva=EC.presence_of_element_located((By.XPATH,"//label"))
+         WebDriverWait(driver, timeout).until(element_bbva)
+         button = driver.find_element(By.XPATH,"//label")
+         action = ActionChains(driver)
+         action.move_to_element(button).click().perform()
+      except Exception as e:
+         print("Error click in other option: " + str(e))
+         error_code = -1
+         return [driver,error_code]
+      try:
+        element_bbva=EC.presence_of_element_located((By.ID, 'presentMail'))
+        WebDriverWait(driver, timeout).until(element_bbva)
+      except TimeoutException as e:
+        print("Error reading other option QR access " + str(e))
+        error_code = -1
+        return [driver,error_code]
+   # Caso de que sea acceso sin biometria
+   print('- OTP check')
+   [driver, error_code] = segundo_factor(driver)
+   return [driver, error_code]
 
 #Operaciones para validar OTP   
 def segundo_factor(driver):
@@ -80,7 +114,8 @@ def segundo_factor(driver):
       time.sleep(timeout)
       # Validar google
       try:
-        element_body=EC.presence_of_element_located((By.TAG_NAME, 'body'))
+        element_body: EC
+        element_body = lambda driver: driver.find_element(By.XPATH,xpath_google)or driver.find_element(By.XPATH,xpath_ether)
         WebDriverWait(driver, timeout).until(element_body)
       except TimeoutException as e:
         print("Timed out waiting for page to load " + method1 + format(str(e)))
@@ -101,7 +136,7 @@ def segundo_factor(driver):
 
 # Verificar cuenta en google
 def verificar(driver):
-   button = driver.find_element(By.XPATH,'//*[@id="view_container"]/div/div/div[2]/div/div[2]/div/div[1]/div/div/button/span')
+   button = driver.find_element(By.XPATH,xpath_google)
    button.click()
    return [driver,0]
 
@@ -180,7 +215,7 @@ def write_file(json_string,error_ether):
     print('- Error generating ether data') 
     
 # Configuración selenium remoto
-def ejecucion():
+def ejecucion(url):
     print("- Run Selenium IDE")
     warnings.simplefilter("ignore")
     options = webdriver.ChromeOptions()
@@ -209,10 +244,10 @@ def ejecucion():
     except Exception as e:
         print("Error executing Chrome driver: {}".format(str(e)))
         return
-    ether_cookies = login_process(driver)
+    ether_cookies = login_process(driver,url)
     return ether_cookies
 # Configuración chromedriver(ejecutable grafico)
-def login_ether():
+def login_ether(url):
     options = webdriver.ChromeOptions()
     options.add_experimental_option("detach",True)
     options.add_argument('--no-proxy-server')
@@ -220,29 +255,29 @@ def login_ether():
     options.add_experimental_option("prefs",prefs)
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                               options=options)
-    ether_cookies = login_process(driver)
+    ether_cookies = login_process(driver,url)
     return ether_cookies
 
 #proceso login
-def login_process(driver):
+def login_process(driver,url):
     timeout = selenium_timeout
-    errorcode = 0
+    error_code = 0
     method1 = 'login_process'
     print("- Begin login process")
     print("- Timeout used: "+ str(timeout)+ " seconds")
     print('- Additional time wait multiplier for second factor: '+ str(timeWait))
     try:    
-      driver.get("https://bbva-ether-console-front.appspot.com/")
+      driver.get(url)
       driver.implicitly_wait(20)
     except Exception as e:
        print('Failing accessing ether url: ' + format(str(e)))
-       return
+       return None
     try:
       pageloaded = EC.presence_of_element_located((By.ID,'username'))
       WebDriverWait(driver, timeout).until(pageloaded)
     except Exception as e:
       print('Timed out waiting for page to load ' + method1 + ' 1 '+ format(str(e)))
-      return
+      return None
     if 'platform.bbva.com' in  driver.current_url:
       print("- BBVA login")
       usuario = driver.find_element(By.ID,'username')
@@ -260,19 +295,25 @@ def login_process(driver):
       Caso 3: acceso para 2 factor de autenticación
       '''
       try:
-          element_body = EC.presence_of_element_located((By.TAG_NAME,'body'))
-          WebDriverWait(driver, timeout).until(element_body)
-          [driver,errorcode,message]=validar_caso(driver)
-          if errorcode == -1:
-             raise AccessException(message)
+        element_body: EC
+        element_body = lambda driver: driver.find_element(By.XPATH,
+                            '//*[@id="form"]/div[3]/label') or driver.find_element(By.XPATH,xpath_google)or driver.find_element(By.XPATH,xpath_ether)
+        WebDriverWait(driver, timeout).until(element_body)
+        [driver,error_code,message]=validar_caso(driver)
+        if error_code == -1:
+           raise AccessException(message)
       except TimeoutException as e:
         print('Timed out waiting for page to load '+ method1 + ' 2 '+ format(str(e)))
+        print("Current url: " + str(driver.current_url))
+        print(str(driver.find_element(By.TAG_NAME,'body').text))
         cerrar_driver(driver)
-        return
+        return None
       except Exception as e:
         print('Exception for page to load '+ method1 + ' 2 '+ format(str(e)))
+        print("Current url: " + str(driver.current_url))
+        print(str(driver.find_element(By.TAG_NAME,'body').text))
         cerrar_driver(driver)
-        return        
+        return None
       time.sleep(timeout)
       ether_cookies= driver.get_cookies()
       print('- Retrieved session cookies from ether')
@@ -280,7 +321,7 @@ def login_process(driver):
       cerrar_driver(driver)
       return ether_cookies
 
-def ether_access(opc):
+def ether_access(opc,url):
   global selenium_timeout
   global timeWait
   if opc is None:
@@ -289,17 +330,20 @@ def ether_access(opc):
       timeWait = 1
   if opc == '1':
     selenium_timeout = 2
-    ether_cookies = ejecucion()
+    ether_cookies = ejecucion(url)
   else:
-    ether_cookies = login_ether()   
+    ether_cookies = login_ether(url)   
   return ether_cookies
 
 def main(opc):
     now = datetime.datetime.now()
+    url="https://bbva-ether-console-front.appspot.com/"
     print('- Time Started: ' + str(now))
-    ether_cookies = ether_access(opc)
+    ether_cookies = ether_access(opc,url)
     # Generación json con información ether
-    obtener_jobs(ether_cookies)
+    if ether_cookies is not None:
+      print('- Ether cookies generated')
+      obtener_jobs(ether_cookies)
     now = datetime.datetime.now()
     print('- Time Ended: ' + str(now))
     print("- Process end")
