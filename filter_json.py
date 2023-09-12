@@ -44,7 +44,7 @@ def procesa_registros(temp_list,extention,output_list,output_string):
 def procesar_registro_ind(extention,temp_string,temp_dict,temp_list):
     if extention == 'csv': 
         for data in header:
-            temp_string += str(temp_dict[data] or '0')+';'
+            temp_string += str(temp_dict[data] or '0').replace('\n',' ') +';'
         temp_string = temp_string[:-1] + '\n'        
     else :
         temp_list.append(temp_dict)

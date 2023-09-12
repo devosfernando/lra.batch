@@ -7,7 +7,7 @@ import requests
 import datetime
 import json
 import filter_json
-import fluent_driver
+import shutil
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
@@ -115,7 +115,7 @@ def segundo_factor(driver):
       # Validar google
       try:
         element_body: EC
-        element_body = lambda driver: driver.find_element(By.XPATH,xpath_google)or driver.find_element(By.XPATH,xpath_ether)
+        element_body = lambda driver: driver.find_element(By.XPATH,xpath_google) or driver.find_element(By.XPATH,xpath_ether)
         WebDriverWait(driver, timeout).until(element_body)
       except TimeoutException as e:
         print("Timed out waiting for page to load " + method1 + format(str(e)))
@@ -249,12 +249,22 @@ def ejecucion(url):
 # Configuración chromedriver(ejecutable grafico)
 def login_ether(url):
     options = webdriver.ChromeOptions()
-    options.add_experimental_option("detach",True)
-    options.add_argument('--no-proxy-server')
+    options.add_argument('log-level=0')
+    options.add_experimental_option('excludeSwitches', ['enable-automation','enable-logging'])
+    options.add_argument("--disable-blink-features=AutomationControlled")        
+    options.add_experimental_option('useAutomationExtension', False)
+    options.add_argument('--remote-debugging-port=9222')
     prefs = {"profile.default_content_setting_values.notifications" : 2}    
     options.add_experimental_option("prefs",prefs)
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
-                              options=options)
+    options.add_argument("--window-size=1382,744")
+    try:
+      if shutil.which("chromedriver.exe") is None:
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
+                                options=options)  
+      else:
+        driver = webdriver.Chrome(executable_path='chromedriver.exe',options=options)
+    except Exception as e:
+       print("Error opening chromedriver executable : {}" + str(e))
     ether_cookies = login_process(driver,url)
     return ether_cookies
 
@@ -352,7 +362,7 @@ def main(opc):
 if __name__=="__main__":
     os.system('cls')
     opc = '1'
-    if len(sys.argv) == 2:
+    if len(sys.argv) >= 2:
        opc=str(sys.argv[1])
     print(' _       ____       _        _____   _     _                   ')
     print('| |     |  _ \     / \      | ____| | |_  | |__     ___   _ __ ')
