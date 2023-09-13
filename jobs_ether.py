@@ -215,20 +215,24 @@ def write_file(json_string,error_ether):
     print('- Data generated for global and Colombia in file ' + data_simplified)
   else:
     print('- Error generating ether data') 
-    
+
+# Generacion opciones chromedriver
+def opciones_chromedriver():
+  options = webdriver.ChromeOptions()
+  options.add_argument('log-level=0')
+  options.add_experimental_option('excludeSwitches', ['enable-automation','enable-logging'])
+  options.add_argument("--disable-blink-features=AutomationControlled")        
+  options.add_experimental_option('useAutomationExtension', False)
+  options.add_argument('--remote-debugging-port=9222')
+  prefs = {"profile.default_content_setting_values.notifications" : 2}    
+  options.add_experimental_option("prefs",prefs)
+  options.add_argument("--window-size=1382,744") 
+  return options
 # Configuración selenium remoto
 def ejecucion(url):
     print("- Run Selenium IDE")
     warnings.simplefilter("ignore")
-    options = webdriver.ChromeOptions()
-    options.add_argument('log-level=0')
-    options.add_experimental_option('excludeSwitches', ['enable-automation','enable-logging'])
-    options.add_argument("--disable-blink-features=AutomationControlled")        
-    options.add_experimental_option('useAutomationExtension', False)
-    options.add_argument('--remote-debugging-port=9222')
-    prefs = {"profile.default_content_setting_values.notifications" : 2}    
-    options.add_experimental_option("prefs",prefs)
-    options.add_argument("--window-size=1382,744")
+    options = opciones_chromedriver()
     # Seteo conexión servidor selenium
     try:
       host='http://'+os.getenv("HOST_SELENIUM")+':4444/wd/hub'
@@ -250,15 +254,7 @@ def ejecucion(url):
     return ether_cookies
 # Configuración chromedriver(ejecutable grafico)
 def login_ether(url):
-    options = webdriver.ChromeOptions()
-    options.add_argument('log-level=0')
-    options.add_experimental_option('excludeSwitches', ['enable-automation','enable-logging'])
-    options.add_argument("--disable-blink-features=AutomationControlled")        
-    options.add_experimental_option('useAutomationExtension', False)
-    options.add_argument('--remote-debugging-port=9222')
-    prefs = {"profile.default_content_setting_values.notifications" : 2}    
-    options.add_experimental_option("prefs",prefs)
-    options.add_argument("--window-size=1382,744")
+    options = opciones_chromedriver()
     try:
       if shutil.which("chromedriver.exe") is None:
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
