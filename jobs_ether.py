@@ -10,6 +10,7 @@ import filter_json
 import shutil
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.remote.webelement import WebElement
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -27,8 +28,8 @@ selenium_timeout = 5
 pageSize = 100
 timeWait= 2
 folder_data="info/"
-xpath_google = '//*[@id="view_container"]/div/div/div[2]/div/div[2]/div/div[1]/div/div/button/span'
-xpath_ether = '//*[@id="ext-element-48"]'
+xpath_google = "//*[@id=\"view_container\"]/div/div/div[2]/div/div[2]/div/div[1]/div/div/button"
+xpath_ether = "//*[@id=\"ext-element-48\"]"
 class AccessException(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -114,9 +115,10 @@ def segundo_factor(driver):
       time.sleep(timeout)
       # Validar google
       try:
-        element_body: EC
-        element_body = lambda driver: driver.find_element(By.XPATH,xpath_google) or driver.find_element(By.XPATH,xpath_ether)
-        WebDriverWait(driver, timeout).until(element_body)
+        WebDriverWait(driver, timeout).until(EC.any_of(
+        EC.presence_of_element_located((By.XPATH, xpath_ether)),
+        EC.presence_of_element_located((By.XPATH, "//*[@id=\"form\"]/div[3]/label")),
+        EC.presence_of_element_located((By.XPATH, xpath_google))))
       except TimeoutException as e:
         print("Timed out waiting for page to load " + method1 + format(str(e)))
         error_code = -1
@@ -305,10 +307,10 @@ def login_process(driver,url):
       Caso 3: acceso para 2 factor de autenticación
       '''
       try:
-        element_body: EC
-        element_body = lambda driver: driver.find_element(By.XPATH,
-                            '//*[@id="form"]/div[3]/label') or driver.find_element(By.XPATH,xpath_google)or driver.find_element(By.XPATH,xpath_ether)
-        WebDriverWait(driver, timeout).until(element_body)
+        WebDriverWait(driver, timeout).until(EC.any_of(
+        EC.presence_of_element_located((By.XPATH, xpath_ether)),
+        EC.presence_of_element_located((By.XPATH, "//*[@id=\"form\"]/div[3]/label")),
+        EC.presence_of_element_located((By.XPATH, xpath_google))))
         [driver,error_code,message]=validar_caso(driver)
         if error_code == -1:
            raise AccessException(message)
