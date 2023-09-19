@@ -19,6 +19,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
+from pathvalidate import sanitize_filepath
 
 # Obtener env de entorno
 from dotenv import load_dotenv
@@ -202,15 +203,16 @@ def obtener_jobs(ether_cookies):
   write_file(json_string,error_ether)
 
 def write_file(json_string,error_ether):
+  now = datetime.datetime.now()
   if error_ether == 0:
     if not os.path.exists(folder_data):
     # If it doesn't exist, create it
       os.makedirs(folder_data)
-    file_output = folder_data + 'data_ether.json'
+    file_output = sanitize_filepath(folder_data + 'data_ether_'+str(now)+'.json')
     with open(file_output, 'w') as outfile:
       outfile.write(str(json_string))
     print('- Full data generated in file ' + file_output)
-    data_simplified = folder_data + 'data_simplified.txt'
+    data_simplified = sanitize_filepath(folder_data + 'data_simplified_'+str(now)+'.txt')
     filter_json.filtrar_ether(file_output,data_simplified)
     print('- Data generated for global and Colombia in file ' + data_simplified)
   else:
@@ -286,7 +288,7 @@ def login_process(driver,url):
     except Exception as e:
       print('Timed out waiting for page to load ' + method1 + ' 1 '+ format(str(e)))
       return None
-    if 'platform.bbva.com' in  driver.current_url:
+    if 'platform.bbva.com' in  driver.current_url and  "Solicitud caducada (I0512)" not in driver.page_source:
       print("- BBVA login")
       usuario = driver.find_element(By.ID,'username')
       contrasenia = driver.find_element(By.ID,'password')
@@ -328,16 +330,18 @@ def login_process(driver,url):
       #Fin proceso
       cerrar_driver(driver)
       return ether_cookies
+    else:
+       print('- Error opening url:'+str(url))
+       cerrar_driver(driver)
 
 def ether_access(opc,url):
   global selenium_timeout
   global timeWait
+  timeWait = 1
   if opc is None:
      opc = '1'
-  if len(sys.argv) > 2:
-      timeWait = 1
   if opc == '1':
-    selenium_timeout = 2
+    selenium_timeout = 5
     ether_cookies = ejecucion(url)
   else:
     ether_cookies = login_ether(url)   
