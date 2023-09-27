@@ -22,7 +22,8 @@ def filtrar_ether(json_path,output_file):
     with open(output_file, 'w') as outfile:
       if extention == 'csv': outfile.write(output_string)
       else: outfile.write(str(json.dumps(output_list,indent=2)))
-    #return 
+    return len(temp_list)
+
 def obtener_salida(output_file):
     ext_pos = output_file.rfind('.')
     file_ext = output_file[-(len(output_file)-ext_pos):].lower()
@@ -50,4 +51,4 @@ def procesar_registro_ind(extention,temp_string,temp_dict,temp_list):
         temp_list.append(temp_dict)
     return [temp_list,temp_string]
 if __name__=="__main__":
-    filtrar_ether('data_ether.json','data_filtered.csv')
+    filtrar_ether('info/data_ether.json','info/data_filtered.csv')

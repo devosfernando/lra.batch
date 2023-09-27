@@ -213,8 +213,9 @@ def write_file(json_string,error_ether):
       outfile.write(str(json_string))
     print('- Full data generated in file ' + file_output)
     data_simplified = sanitize_filepath(folder_data + 'data_simplified_'+str(now)+'.txt')
-    filter_json.filtrar_ether(file_output,data_simplified)
+    records_col = filter_json.filtrar_ether(file_output,data_simplified)
     print('- Data generated for global and Colombia in file ' + data_simplified)
+    print('- Total jobs registered for global and Colonbia: ' + str(records_col))
   else:
     print('- Error generating ether data') 
 
