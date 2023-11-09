@@ -1,8 +1,8 @@
 import os
 import time
 import warnings
-import Correo
-import sincronizar
+import src.lib.Correo
+import src.lib.sincronizar
 import mysql.connector
 import sys
 from datetime import datetime
@@ -291,6 +291,19 @@ def CargaDatos():
 
 
 def main():
+    print(" _____        _                  _                        ")
+    print("|  __ \      | |            /\  | |                       ")
+    print("| |  | | __ _| |_ __ _     /  \ | |_ ___ _ __   ___  __ _ ")
+    print("| |  | |/ _` | __/ _` |   / /\ \| __/ _ \ '_ \ / _ \/ _` |")
+    print("| |__| | (_| | || (_| |  / ____ \ ||  __/ | | |  __/ (_| |")
+    print("|_____/ \__,_|\__\__,_| /_/    \_\__\___|_| |_|\___|\__,_|")
+    print("                                                          ")
+    print("")    
+    ejecucion()
+    print("- Process end succesfully")
+
+    
+def Atenea():
     print(" _____        _                  _                        ")
     print("|  __ \      | |            /\  | |                       ")
     print("| |  | | __ _| |_ __ _     /  \ | |_ ___ _ __   ___  __ _ ")

@@ -1,34 +1,30 @@
-import imaplib
+# -*- coding: utf-8 -*-
+# 
 import email
+import imaplib
+import logging
 from email.header import decode_header
-import webbrowser
-import os
-from getpass import getpass
-
-#irzsbvrvjyevapri
-# Datos del usuario
 
 
-def consultarCorreo(user,clave):
-    username = user
-    password = clave
-
+def consultarCorreo(username,password):
+    logging.info("   --- Conection Correo ---")
+    logging.info("  -> Accediendo via IMAP al correo: " + str(username))
     codverificacion="000000"
     # Crear conexión
     imap = imaplib.IMAP4_SSL("imap.gmail.com")
+
     # iniciar sesión
     imap.login(username, password)
+    logging.info("  -> Login Completado: " + str(username))
 
     status, mensajes = imap.select("INBOX")
-    # print(mensajes)
     # mensajes a recibir
     N = 3
     # cantidad total de correos
     mensajes = int(mensajes[0])
 
     for i in range(mensajes, mensajes - N, -1):
-        # print(f"vamos por el mensaje: {i}")
-    #     # Obtener el mensaje
+        # Obtener el mensaje
         try:
             res, mensaje = imap.fetch(str(i), "(RFC822)")
         except:
@@ -44,10 +40,10 @@ def consultarCorreo(user,clave):
                     subject = subject.decode()
                 # de donde viene el correo
                 from_ = mensaje.get("From")
-                print("Subject:", subject)
+                logging.info("  ->    Subject:" + str(subject))
                 #print("De:",mensaje.get("De"))
-                print("From:", from_)
-                #print("Mensaje obtenido con exito")
+                logging.info("  ->    From:" + str(from_))
+                #print("Mensaje obtenido con exito"))
                 # si el correo es html
                 if mensaje.is_multipart() and from_ == "Acceso Corporativo BBVA <nauthilus-bot@bbva.com>" :
                     # Recorrer las partes del correo
@@ -59,24 +55,11 @@ def consultarCorreo(user,clave):
                             # el cuerpo del correo
                             body = part.get_payload(decode=True).decode()
                             #body=part.get_content_charset()
-                            print("BODY--------------------------------------------")
-                            print(body)
+                            logging.info("  ->     Body: " + str(body))
                             codverificacion = body[-6:]
-                            print("CODIGO-----------------------------------------------")
-                            print(codverificacion)
-                            
+                            logging.info("  ->     Codigo: " + str(codverificacion))                            
                         except:
                             pass
-                # if content_type == "text/html":
-                #     # Abrir el html en el navegador
-                #     if not os.path.isdir(subject):
-                #         os.mkdir(subject)
-                #     nombre_archivo = f"{subject}.html"
-                #     ruta_archivo = os.path.join(subject, nombre_archivo)
-                #     open(ruta_archivo, "w").write(body)
-                #     # abrir el navegador
-                #     webbrowser.open(ruta_archivo)
-    #             print("********************************")
         if codverificacion != "000000":
             break
     imap.close()

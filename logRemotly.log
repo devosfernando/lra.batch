@@ -1,0 +1,23 @@
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:900
+ * Running on http://192.168.0.21:900
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Opteniendo tiempo de ultima ejecucion
+INFO:root:  -> Fecha en BD: 2023-11-16 17:15:57
+INFO:root:  -> Valor en BD: [{'DATE_END': '2023-11-16 17:15:57', 'VAL': 'u7K52/BftuISvygDRuN/0ry1tUBKhkoVTve6qBXUqXa0NqN0Sx42e+6cvSj26K3rDZH7Kk1j4KV8fF6QurEC1vg7donflo5W2UARnXdq64ucwPk6OqZ7tv/wCyOT', 'NAME': 'AWSALB', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '2023-11-16 17:15:57', 'VAL': 'u7K52/BftuISvygDRuN/0ry1tUBKhkoVTve6qBXUqXa0NqN0Sx42e+6cvSj26K3rDZH7Kk1j4KV8fF6QurEC1vg7donflo5W2UARnXdq64ucwPk6OqZ7tv/wCyOT', 'NAME': 'AWSALBCORS', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': '05D33014E12D1805F9EF80DE9C349DF5', 'NAME': 'JSESSIONID', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': 'BHE0-C1TY-6K7D-41XG_aab443e404af41b7316bfc8b2b8db61f8b7966e7_lin', 'NAME': 'atlassian.xsrf.token', 'GROUP': 'jira.globaldevtools.bbva.com'}]
+INFO:root:  -> Evaluando tiempo
+INFO:root:  -> Tiempo en BD:    2023-11-16 17:15:57
+INFO:root:  -> Tiempo en local: 2023-11-09 12:24:12.902015
+INFO:root:  -> Aun en tiempo
+INFO:werkzeug:127.0.0.1 - - [09/Nov/2023 12:24:12] "GET /jira HTTP/1.1" 200 -
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Opteniendo tiempo de ultima ejecucion
+INFO:root:  -> Fecha en BD: 2023-11-16 17:15:57
+INFO:root:  -> Valor en BD: [{'DATE_END': '2023-11-16 17:15:57', 'VAL': 'u7K52/BftuISvygDRuN/0ry1tUBKhkoVTve6qBXUqXa0NqN0Sx42e+6cvSj26K3rDZH7Kk1j4KV8fF6QurEC1vg7donflo5W2UARnXdq64ucwPk6OqZ7tv/wCyOT', 'NAME': 'AWSALB', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '2023-11-16 17:15:57', 'VAL': 'u7K52/BftuISvygDRuN/0ry1tUBKhkoVTve6qBXUqXa0NqN0Sx42e+6cvSj26K3rDZH7Kk1j4KV8fF6QurEC1vg7donflo5W2UARnXdq64ucwPk6OqZ7tv/wCyOT', 'NAME': 'AWSALBCORS', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': '05D33014E12D1805F9EF80DE9C349DF5', 'NAME': 'JSESSIONID', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': 'BHE0-C1TY-6K7D-41XG_aab443e404af41b7316bfc8b2b8db61f8b7966e7_lin', 'NAME': 'atlassian.xsrf.token', 'GROUP': 'jira.globaldevtools.bbva.com'}]
+INFO:root:  -> Evaluando tiempo
+INFO:root:  -> Tiempo en BD:    2023-11-16 17:15:57
+INFO:root:  -> Tiempo en local: 2023-11-09 12:24:21.112240
+INFO:root:  -> Aun en tiempo
+INFO:werkzeug:127.0.0.1 - - [09/Nov/2023 12:24:21] "GET /jira HTTP/1.1" 200 -

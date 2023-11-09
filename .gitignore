@@ -1,3 +1,7 @@
 *.dll
 __pycache__
 .env
+downloads/*
+jsonBackup/*
+jsonSend/*
+*.log
