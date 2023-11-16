@@ -32,3 +32,6 @@ webdriver_manager
 selenium
 chromedriver-autoinstaller
 fake_useragent
+mysqlclient
+mysql-connector-python
+pymysql
