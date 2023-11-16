@@ -244,7 +244,9 @@ def selectTimeCookie():
 
 
 def Jira():
+    print("--- Inicio Jira ---")
     local=False
     fecha, value = selectTimeCookie()
     accion=tiempo_transcurrido(fecha)
+    print("--- Fin Jira ---")
     return value if accion else ejecucion(local)

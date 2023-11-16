@@ -115,7 +115,7 @@ def parametros():
     return(usr, pas, host,port)
 
 
-def main():
+def Sincronizar():
     print("\n")
     usr,pas,host,port=parametros()
     query = """select hist_date from history where hist_EjecHost <> 0 order by hist_date desc limit 1"""
@@ -138,7 +138,3 @@ def main():
         dateHistory = histQ
         dateCurrent = tempQ
         iteration(usr, pas, host, dateHistory, dateCurrent,port)
-
-
-if __name__=="__main__":
-    main()
