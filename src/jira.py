@@ -51,10 +51,10 @@ def updateCookie(group, name, value, fecha_actual):
         sqlite = ("""INSERT INTO cookie 
                         (cookie.`GROUP`, cookie.`NAME`, cookie.`VAL`, cookie.`DATE_END`)
                     VALUES
-                        (%s, %s, %s, %s) 
+                        (%s, %s, %s, NOW()) 
                     ON DUPLICATE KEY UPDATE 
-                        cookie.`VAL` = %s, cookie.`DATE_END` = %s""")
-        cursor.execute(sqlite, (group, name, value, fecha_actual, value, fecha_actual))
+                        cookie.`VAL` = %s, cookie.`DATE_END` = NOW()""")
+        cursor.execute(sqlite, (group, name, value, value))
         conn.commit()
         logging.info("  -> Variables de Python insertadas con exito en la tabla Jira de ejecuciones")
     except mysql.connector.Error as err:

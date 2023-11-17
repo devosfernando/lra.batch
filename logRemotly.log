@@ -3,3 +3,78 @@ INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a
  * Running on http://127.0.0.1:900
  * Running on http://192.168.0.22:900
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Opteniendo tiempo de ultima ejecucion
+INFO:root:  -> Fecha en BD: 2023-11-23 20:01:10
+INFO:root:  -> Valor en BD: [{'DATE_END': '2023-11-23 20:01:10', 'VAL': 'FDNh2sPf2+PbSWZIdcxUdMicYwOtm3CRyfXGRKBvbbTdNjMWUQ9vRp1r7YsYcLOCVZfcHeKEoKDGdn1iMx90wSpFnmssvWHjeDa4z7Ov+GiWXcycPK4OkPAi/wXE', 'NAME': 'AWSALB', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '2023-11-23 20:01:10', 'VAL': 'FDNh2sPf2+PbSWZIdcxUdMicYwOtm3CRyfXGRKBvbbTdNjMWUQ9vRp1r7YsYcLOCVZfcHeKEoKDGdn1iMx90wSpFnmssvWHjeDa4z7Ov+GiWXcycPK4OkPAi/wXE', 'NAME': 'AWSALBCORS', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': '7CD80B65C5B22738455BD0A0BF3D7CE3', 'NAME': 'JSESSIONID', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': 'BHE0-C1TY-6K7D-41XG_a48e64adea7f4b731982bb8de34f74b772d5f57c_lin', 'NAME': 'atlassian.xsrf.token', 'GROUP': 'jira.globaldevtools.bbva.com'}]
+INFO:root:  -> Evaluando tiempo
+INFO:root:  -> Tiempo en BD:    2023-11-23 20:01:10
+INFO:root:  -> Tiempo en local: 2023-11-16 16:21:21.191716
+INFO:root:  -> Aun en tiempo
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 16:21:21] "GET /jira HTTP/1.1" 200 -
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Opteniendo tiempo de ultima ejecucion
+INFO:root:  -> Fecha en BD: 2023-11-11 20:01:10
+INFO:root:  -> Valor en BD: [{'DATE_END': '2023-11-11 20:01:10', 'VAL': 'FDNh2sPf2+PbSWZIdcxUdMicYwOtm3CRyfXGRKBvbbTdNjMWUQ9vRp1r7YsYcLOCVZfcHeKEoKDGdn1iMx90wSpFnmssvWHjeDa4z7Ov+GiWXcycPK4OkPAi/wXE', 'NAME': 'AWSALB', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '2023-11-11 20:01:10', 'VAL': 'FDNh2sPf2+PbSWZIdcxUdMicYwOtm3CRyfXGRKBvbbTdNjMWUQ9vRp1r7YsYcLOCVZfcHeKEoKDGdn1iMx90wSpFnmssvWHjeDa4z7Ov+GiWXcycPK4OkPAi/wXE', 'NAME': 'AWSALBCORS', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': '7CD80B65C5B22738455BD0A0BF3D7CE3', 'NAME': 'JSESSIONID', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': 'BHE0-C1TY-6K7D-41XG_a48e64adea7f4b731982bb8de34f74b772d5f57c_lin', 'NAME': 'atlassian.xsrf.token', 'GROUP': 'jira.globaldevtools.bbva.com'}]
+INFO:root:  -> Evaluando tiempo
+INFO:root:  -> Tiempo en BD:    2023-11-11 20:01:10
+INFO:root:  -> Tiempo en local: 2023-11-16 16:22:21.952424
+INFO:root:  -> Fuera de tiempo
+INFO:root:   --- Conection Selenium ---
+INFO:root:  -> Cargta driver y opciones de selenium
+INFO:root:  -> Conexion remota de selenium
+INFO:root:  -> Conexion a selenio iniciada
+INFO:root:  -> Cargando Login 
+INFO:root:  -> Login BBVA
+INFO:root:  -> Validacion de Cuenta
+INFO:root:  -> Click en recibir clave de correo
+INFO:root:   --- Conection Correo ---
+INFO:root:  -> Accediendo via IMAP al correo: luisfernando.diaz.devos@bbva.com
+INFO:root:  -> Login Completado: luisfernando.diaz.devos@bbva.com
+INFO:root:  ->    Subject:BBVA
+INFO:root:  ->    From:Acceso Corporativo BBVA <nauthilus-bot@bbva.com>
+INFO:root:  ->     Body: Su codigo de verificacion de BBVA es 228290
+INFO:root:  ->     Codigo: 228290
+INFO:root:   --- Conection Selenium ---
+INFO:root:  -> Click para confirmar cuenta
+INFO:root:  -> Obtener Cookies
+INFO:root:  -> Valor a domain jira.globaldevtools.bbva.com
+INFO:root:  -> Valor a name   AWSALBCORS
+INFO:root:  -> Valor a value  QVBQfy2fBUdZEVLJSyAdc5CvoAzjag0hpsS6LqTX77Pb3x7WuoQrgv6ilx+jPlASgtGe3rN39THeE95ac6JkpGYFJIy9wE+O8S4CKZKi3eBMYAU5cERi7msLb7l5
+INFO:root:  -> Valor a fecha  2023-11-23 21:22:48
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Actualizando Cookies 
+INFO:root:  -> Variables de Python insertadas con exito en la tabla Jira de ejecuciones
+INFO:root:  -> Valor a domain jira.globaldevtools.bbva.com
+INFO:root:  -> Valor a name   AWSALB
+INFO:root:  -> Valor a value  QVBQfy2fBUdZEVLJSyAdc5CvoAzjag0hpsS6LqTX77Pb3x7WuoQrgv6ilx+jPlASgtGe3rN39THeE95ac6JkpGYFJIy9wE+O8S4CKZKi3eBMYAU5cERi7msLb7l5
+INFO:root:  -> Valor a fecha  2023-11-23 21:22:48
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Actualizando Cookies 
+INFO:root:  -> Variables de Python insertadas con exito en la tabla Jira de ejecuciones
+INFO:root:  -> Valor a domain jira.globaldevtools.bbva.com
+INFO:root:  -> Valor a name   session-data-0e0e876f-d0c5-496a-b372-f0e8ccdb8794
+INFO:root:  -> Valor a value  
+INFO:root:  -> Valor a fecha  2023-11-16 21:27:23
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Valor a domain jira.globaldevtools.bbva.com
+INFO:root:  -> Valor a name   atlassian.xsrf.token
+INFO:root:  -> Valor a value  BHE0-C1TY-6K7D-41XG_d75a7f7679e959e16c1c7494604e7570ec936011_lin
+INFO:root:  -> Valor a fecha !0001-01-01 00:00:00
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Actualizando Cookies 
+INFO:root:  -> Variables de Python insertadas con exito en la tabla Jira de ejecuciones
+INFO:root:  -> Valor a domain jira.globaldevtools.bbva.com
+INFO:root:  -> Valor a name   JSESSIONID
+INFO:root:  -> Valor a value  B03D3F92CCA1679CA1D4668125DC2416
+INFO:root:  -> Valor a fecha !0001-01-01 00:00:00
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Actualizando Cookies 
+INFO:root:  -> Variables de Python insertadas con exito en la tabla Jira de ejecuciones
+INFO:root:  -> Finaliza Correctamente
+INFO:root:   --- Conection Database ---
+INFO:root:  -> Opteniendo tiempo de ultima ejecucion
+INFO:root:  -> Fecha en BD: 2023-11-23 21:22:48
+INFO:root:  -> Valor en BD: [{'DATE_END': '2023-11-23 21:22:48', 'VAL': 'QVBQfy2fBUdZEVLJSyAdc5CvoAzjag0hpsS6LqTX77Pb3x7WuoQrgv6ilx+jPlASgtGe3rN39THeE95ac6JkpGYFJIy9wE+O8S4CKZKi3eBMYAU5cERi7msLb7l5', 'NAME': 'AWSALB', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '2023-11-23 21:22:48', 'VAL': 'QVBQfy2fBUdZEVLJSyAdc5CvoAzjag0hpsS6LqTX77Pb3x7WuoQrgv6ilx+jPlASgtGe3rN39THeE95ac6JkpGYFJIy9wE+O8S4CKZKi3eBMYAU5cERi7msLb7l5', 'NAME': 'AWSALBCORS', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': 'B03D3F92CCA1679CA1D4668125DC2416', 'NAME': 'JSESSIONID', 'GROUP': 'jira.globaldevtools.bbva.com'}, {'DATE_END': '0001-01-01 00:00:00', 'VAL': 'BHE0-C1TY-6K7D-41XG_d75a7f7679e959e16c1c7494604e7570ec936011_lin', 'NAME': 'atlassian.xsrf.token', 'GROUP': 'jira.globaldevtools.bbva.com'}]
+INFO:root:  -> Finaliza
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 16:22:52] "GET /jira HTTP/1.1" 200 -
