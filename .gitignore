@@ -6,3 +6,5 @@ file/jsonSend/*
 db/*
 delete/*
 *.log
+logRemotly.log
+www/*

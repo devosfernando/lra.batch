@@ -102,39 +102,29 @@ def iteration(usr,pas,host,dateHistory, dateCurrent,port):
 
 
 def parametros():
-
-    print(" Ejecucion Local")
     usr = os.getenv('USER_MYSQL')
-    print(f"  Usuario:  {usr}")
     pas = os.getenv('PASSWORD_MYSQL')
-    print(f"  Password: {pas}")
     host= os.getenv('HOST')
-    print(f"  Host:  {host}")
     port = os.getenv('PORT_MYSQL')
-    print(f"  Puerto:  {port}")
     return(usr, pas, host,port)
 
 
 def Sincronizar():
-    print("\n")
     usr,pas,host,port=parametros()
     query = """select hist_date from history where hist_EjecHost <> 0 order by hist_date desc limit 1"""
     histQ = getSql(usr,pas,host,"Get date on Database", query,port)
     query = """SELECT executions.exec_fecha FROM executions where executions.exec_canal <> "ETHER" order by executions.exec_fecha desc limit 1"""
     etherQ = getSql(usr,pas,host,"Get date on Database", query,port)
     query = "SELECT current_date() "
-    hostQ = getSql(usr, pas, host, "Get Info history Database", query,port)
+    #hostQ = getSql(usr, pas, host, "Get Info history Database", query,port)
 
-    if etherQ < hostQ:
-        tempQ = etherQ
-    else:
-        tempQ = hostQ
-    print(tempQ)
-    print(hostQ)
-    print(histQ)
-    if tempQ <= histQ:
-        print("No update")
-    else:
-        dateHistory = histQ
-        dateCurrent = tempQ
-        iteration(usr, pas, host, dateHistory, dateCurrent,port)
+    #if etherQ < hostQ:
+    #    tempQ = etherQ
+    #else:
+    #    tempQ = hostQ
+    #if tempQ <= histQ:
+    #    print("No update")
+    #else:
+    #    dateHistory = histQ
+    #    dateCurrent = tempQ
+    #    iteration(usr, pas, host, dateHistory, dateCurrent,port)

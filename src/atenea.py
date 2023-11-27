@@ -35,7 +35,7 @@ def fechas():
     limite = date.today()
     limite = limite + timedelta(days=-1)
     logging.info("  ->   Fecha to:               "+str(limite))
-    numdays = (limite - datefrom).days 
+    numdays = (limite - datefrom).days + 1
     logging.info("  ->   Number days pendientes: "+str(numdays))
     return datefrom, limite, numdays
         
@@ -46,8 +46,7 @@ def conexion():
                                     port=os.getenv("PORT_MYSQL"),
                                     user=os.getenv("USER_MYSQL"), 
                                     password=os.getenv("PASSWORD_MYSQL"), 
-                                    database=os.getenv("DATABASE"),
-                                    auth_plugin=os.getenv("ATH_MYSQL"))
+                                    database=os.getenv("DATABASE"))
     return db  
 
 
@@ -181,7 +180,7 @@ def ejecucion(local):
             yesterday = driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div/div/div[7]/div[1]/dashboard-filter/div/div[1]/div/div/div/ul/li[4]') # Click en yesterday
             yesterday.click()
             logging.info("  -> MENU de date range, dia anterior")
-            while (datefrom != limite):  
+            while (datefrom != (limite + timedelta(days=1))):  
                 date_Temp= datefrom + timedelta(days=+1)
                 if (date.today()+ timedelta(days=-1)) == datefrom:
                     logging.info("MENU ")
@@ -232,22 +231,19 @@ def ejecucion(local):
 def executionSql(date, total):
     conn = conexion()
     cursor = conn.cursor()
-    print(type(total))
     date = date.strftime('%Y-%m-%d')
     insert_stmt = (
         "INSERT INTO planbackend.executions(exec_fecha, exec_canal, exec_tx, exec_number, exec_mips_medio, exec_time_mid)"
         " VALUES (%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE exec_number=%s, exec_mips_medio=%s, exec_time_mid=%s"
     )
-    data = (date, 'ETHER', 'ATEN', total, '0', '0', total, '0', '0')
-    #try:
-    cursor.execute(insert_stmt, data)
-    conn.commit()
-    logging.info(cursor.rowcount, "record inserted")
-    logging.info("\r    -->    OK: " +  " - " + str(date) + " - " + str(total) + "          ", end=' ', flush=True)
-    #except: 
-    #    logging.info(" ERROR: " +  "/" + " - " + str(date) + " - " + str(total) + "          ")
-    #    conn.rollback()
-    #finally:
+    data = (date, 'ETHER', 'ATEN', int(str(total).replace(".","")), '0', '0', int(str(total).replace(".","")), '0', '0')
+    try:
+        cursor.execute(insert_stmt, data)
+        conn.commit()
+        logging.info("\r    -->    SQL OK: ")      
+    except: 
+        logging.info(" ERROR: " +  "/" + " - " + str(date) + " - " + str(total) + "          ")
+        conn.rollback()
     cursor.close() 
     conn.close()
 
